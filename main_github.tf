@@ -208,7 +208,7 @@ resource "github_branch_protection" "guild_site_protection" {
   allows_force_pushes = false
 
   required_status_checks {
-    /* contexts = [] */
+    /* contexts = ["Generate Pages"] */
   }
 
   required_pull_request_reviews {
@@ -226,26 +226,12 @@ resource "github_branch_protection" "guild_operations_protection" {
   count                           = var.github.gitops_repo.enable_protection ? 1 : 0
   repository_id                   = data.github_repository.guild_operations.name
   pattern                         = "main"
-  enforce_admins                  = true
+  enforce_admins                  = false
   require_signed_commits          = true
   require_conversation_resolution = true
 
   allows_deletions    = false
-  allows_force_pushes = false
-
-  required_status_checks {
-    /* contexts = [] */
-  }
-
-  required_pull_request_reviews {
-    dismiss_stale_reviews           = true
-    restrict_dismissals             = true
-    dismissal_restrictions          = data.github_user.maintainers[*].node_id
-    require_code_owner_reviews      = true
-    required_approving_review_count = 1
-  }
-
-  push_restrictions = data.github_user.maintainers[*].node_id
+  allows_force_pushes = true
 }
 
 resource "github_branch_protection" "guild_internal_protection" {
@@ -264,11 +250,9 @@ resource "github_branch_protection" "guild_internal_protection" {
   }
 
   required_pull_request_reviews {
-    dismiss_stale_reviews           = true
-    restrict_dismissals             = true
-    dismissal_restrictions          = data.github_user.maintainers[*].node_id
-    require_code_owner_reviews      = true
-    required_approving_review_count = 2
+    dismiss_stale_reviews  = true
+    restrict_dismissals    = true
+    dismissal_restrictions = data.github_user.maintainers[*].node_id
   }
 
   push_restrictions = data.github_user.maintainers[*].node_id

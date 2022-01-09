@@ -9,7 +9,7 @@ github = {
   }
 
   gitops_repo = {
-    enable_protection = false
+    enable_protection = true
     name              = "itguild-operations"
 
     contrib_teams  = ["Operators"] // push

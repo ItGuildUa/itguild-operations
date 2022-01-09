@@ -1,53 +1,47 @@
 # ItGuild Operations
 
-GitOps репозиторий [itguild.org.ua](https://itguild.org.ua).
+GitOps репозиторій [Гільдії IT Фахіфців](https://itguild.org.ua).
 
-## Требования
+## Вимоги
 
  * [terraform](terraform.io)
- * [docker](https://www.docker.com/) (рекомендуется) 
+ * [docker](https://www.docker.com/) (рекомендується) 
    для [terraform](https://www.terraform.io/) [precommit](https://pre-commit.com/) [hooks](https://github.com/antonbabenko/pre-commit-terraform)
 
-## Использование
+## Використання
 
-Установите [precommit hooks](https://github.com/antonbabenko/pre-commit-terraform) согласно [официальной инструкции](https://github.com/antonbabenko/pre-commit-terraform#1-install-dependencies) 
+Вставіть [precommit hooks](https://github.com/antonbabenko/pre-commit-terraform) згідно [інструкції](https://github.com/antonbabenko/pre-commit-terraform#1-install-dependencies) 
 
-Для сборки docker образа предоставлен [install-tfhooks.sh](./install-tfhooks.sh) скрипт.
+Для збірки docker образу застосуйте [install-tfhooks.sh](./install-tfhooks.sh) скрипт.
 
 ```bash
+# завантажте terraform провайдери
 terraform init
 
-# Выполните проверки с помощью docker образа Антона Бабенко
+# (опціонально) виконайте перевірки статичними аналізаторами, задопомогою docker образу Антона Бабенко
 docker run -v $(pwd):/lint -w /lint ghcr.io/antonbabenko/pre-commit-terraform:v1.62.3 run -a
 
-# либо с помощью того что собрали сами с помощью ./install-tfhooks.sh
+# або ж того що зібрали задопомогою ./install-tfhooks.sh
 docker run -v $(pwd):/lint -w /lint pre-commit-terraform:v1.62.3 run -a
 
-# желательно выполнить хотя бы минимальные проверки, если лень в pre-commit
+# Обов'язково виконайте перевірки перед Pull Request'ом
 terraform fmt -check
 terraform validate
 
-# выполните terraform plan, если у вас есть github token,
-# или просто создайте PR в этот репозиторий
-terrafrorm plan 
-
-# добавьте изменения
-git add .
-git commit -m "new state"
-# если настроили pre-commit и все статические анализаторы самостоятельно, 
-# без докера, проверки выполнятся перед git commit
-git push
+# виконайте terraform plan, якщо у вас э github token організації,
+# або ж просто зробіть Pull Request у цей репозиторій - відповідний Github Action прокоментує зміни
+terrafrorm plan
 ```
 
-При создании Pull Request github actions прокоментирует существующий план.
+При створенні Pull Request'a github actions прокоментує існуючий план.
+Стан terraform'a зберігається, без блокувань, в цьому git репозиторії.
 
-Пока состояние terraform'a так же хранится без блокировок в git репозитории, 
-дополнительно проганяются проверки в github actions, там же применяется состояние через terraform apply.
+## Примітка
 
-## Примечание
+Тут не зберерігається github api token - тому публічний доступ є безпечним.
 
-Этот репозиторий не содержит github api token - публичный доступ к нему является безопасным.
+**Будьте обачні** - не опублікуйте github api token за жодних обставин.
 
-## Лицензия
+## Ліцензія
 
-Это открытый проект для [IT Гильдии](https://itguild.org.ua), распространяется под [MIT Лицензией](LICENSE).
+Цей відкритий проект [Гільдії IT Фахіфців](https://itguild.org.ua) розповсюджується згідно [MIT Ліцензії](LICENSE).
