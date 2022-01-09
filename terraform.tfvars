@@ -75,5 +75,10 @@ github = {
     admin         = false
     github_handle = "yullifer"
     teams         = ["Members"]
+    }, {
+    name          = "Shyshko Artem"
+    admin         = false
+    github_handle = "SiRArtem"
+    teams         = ["Members"]
   }]
 }
