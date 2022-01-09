@@ -1,0 +1,9 @@
+repo-id: ItGuildUa/itguild-operations
+
+branch: master
+download-external-modules: true
+evaluate-variables: true
+external-modules-download-path: .terraform/checkov_external_modules
+framework: all
+output: cli
+quiet: true
