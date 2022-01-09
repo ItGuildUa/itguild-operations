@@ -10,7 +10,7 @@ GitOps репозиторій [Гільдії IT Фахіфців](https://itgui
 
 ## Використання
 
-Вставіть [precommit hooks](https://github.com/antonbabenko/pre-commit-terraform) згідно [інструкції](https://github.com/antonbabenko/pre-commit-terraform#1-install-dependencies) 
+Встановіть [precommit hooks](https://github.com/antonbabenko/pre-commit-terraform) згідно [інструкції](https://github.com/antonbabenko/pre-commit-terraform#1-install-dependencies) 
 
 Для збірки docker образу застосуйте [install-tfhooks.sh](./install-tfhooks.sh) скрипт.
 
