@@ -273,11 +273,11 @@ resource "github_membership" "org_membership" {
 locals {
   membership = tolist(flatten([
     for member in var.github.members : [
-      for team in var.github.teams : {
+      for team in member.teams : {
         username   = member.github_handle
         team_id    = local.all_teams[team].id
         maintainer = contains(member.teams, var.github.teams.maintainers_team)
-      } if contains(member.teams, team)
+      }
     ]
   ]))
 }
